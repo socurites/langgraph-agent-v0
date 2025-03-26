@@ -1,0 +1,31 @@
+{
+    "name": "research-assistant",
+    "version": "0.1.0",
+    "description": "AI 기반 연구 보조 도구",
+    "dependencies": ["."],
+    "graphs": {
+        "research": "./v0/research/research_assistant.py:graph"
+    },
+    "config": {
+        "llm_model": "gpt-4o-mini",
+        "llm_temperature": 0,
+        "max_analysts": 5,
+        "max_num_turns": 3
+    },
+    "endpoints": {
+        "research": {
+            "path": "/research",
+            "method": "POST",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "topic": {"type": "string"},
+                    "max_analysts": {"type": "integer", "default": 5},
+                    "max_num_turns": {"type": "integer", "default": 3},
+                    "analyst_feedback": {"type": "string", "optional": true}
+                },
+                "required": ["topic"]
+            }
+        }
+    }
+} 
