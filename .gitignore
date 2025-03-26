@@ -56,3 +56,6 @@ coverage.xml
 
 # Logs
 *.log 
+
+# LangGraph
+.langgraph_api/

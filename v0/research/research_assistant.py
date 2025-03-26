@@ -82,7 +82,6 @@ class ResearchAssistant:
         return builder.compile(interrupt_before=['human_feedback'], checkpointer=memory)    
 
 def test_assistant(max_analysts, topic, max_num_turns):
-
     thread = {"configurable": {"thread_id": "1"}}
 
     assistant = ResearchAssistant()
@@ -98,17 +97,15 @@ def test_assistant(max_analysts, topic, max_num_turns):
     for event in graph.stream(None, thread, stream_mode="values"):
         analysts = event.get("analysts", '')
 
-
     # If we are satisfied
     further_feedback = None
     graph.update_state(thread, {"human_analyst_feedback": further_feedback}, as_node="human_feedback")
 
-    # # Continue the graph execution
+    # Continue the graph execution
     for event in graph.stream(None, thread, stream_mode="updates"):
         print("--Node--")
         node_name = next(iter(event.keys()))
         print(node_name)
-
 
     messages = [HumanMessage(f"So you said you were writing an article on {topic}?")]
     thread = {"configurable": {"thread_id": "1"}}
@@ -118,6 +115,10 @@ def test_assistant(max_analysts, topic, max_num_turns):
     final_state = graph.get_state(thread)
     report = final_state.values.get('final_report')
     print(report)
+
+# Export the graph for LangGraph platform
+assistant = ResearchAssistant()
+graph = assistant.graph
 
 if __name__ == "__main__":
     # Input
